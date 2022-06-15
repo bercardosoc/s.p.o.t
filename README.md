@@ -1,2 +1,1 @@
-# s.p.o.t.
-Front end to pollutants recyping
+# S.P.O.T.
