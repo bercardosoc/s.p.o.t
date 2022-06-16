@@ -4,6 +4,9 @@ import { AuthContext } from "../../contexts/AuthContext"
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "../../components/Form/Input";
+import { Flex } from "@chakra-ui/react";
+import { FormButton } from "../../components/Form/Button";
 
 export const Signup = () => {
 
@@ -37,36 +40,44 @@ export const Signup = () => {
     }
 
     return (
-        <form
+        <Flex
+            as="form"
+            flexDirection="column"
             onSubmit={handleSubmit(handleSignup)}        
         >
-            <input
+            <Input
+                placeholder="Seu nome"
+                error={errors.name}
                 {...register("name")}
-                placeholder="name"
             />
-            <input
+            <Input
+                placeholder="Seu email"
+                error={errors.email}
                 {...register("email")}
-                placeholder="email"
             />
-            <input
+            <Input
+                placeholder="Sua senha"
+                error={errors.password}
                 {...register("password")}
-                placeholder="password"
             />
-            <input
+            <Input
+                placeholder="Seu CEP"
+                error={errors.zipCode}
                 {...register("address.zipCode")}
-                placeholder="zipCode"
             />
-            <input
+            <Input
+                placeholder="Seu número"
+                error={errors.number}
                 {...register("address.number")}
-                placeholder="number"
             />
-            <input
+            <Input
+                placeholder="Complemento (casa, apt, etc)"
+                error={errors.complement}
                 {...register("address.complement")}
-                placeholder="complement"
             />
-            <button type="submit" >
-                Submit
-            </button>
-        </form>
+            <FormButton type="submit" >
+                Enviar
+            </FormButton>
+        </Flex>
     )
 }
