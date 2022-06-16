@@ -70,7 +70,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ nam
                 onChangeCapture={(e) => setValue(e.currentTarget.value)}
                 onFocus={handleInputFocus}
                 borderColor={inputVariation[variation]}
-                color={inputVariation[variation]}
+                color={"gray.500"}
+                margin={1}
                 variant="outline"
                 _placeholder={{ color: "gray.500" }}
                 ref={ref}
