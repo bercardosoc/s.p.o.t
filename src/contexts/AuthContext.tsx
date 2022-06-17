@@ -1,22 +1,9 @@
 import { api } from "../services/api";
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 
 interface AuthProviderProps {
     children: ReactNode
-}
-
-/* interface Address {
-    zipCode: string 
-    number: number 
-    complement: string 
 } 
-
-interface User {
-    id: string 
-    name: string 
-    email: string 
-    address: Address
-} */
 
 interface Address {
     zipCode: string 
@@ -35,13 +22,77 @@ interface signUpCredentials {
     } 
 }
 
+interface User {
+    id: string
+    name: string
+    email: string
+    password?: string
+    address: Address
+}
+
+interface signInCredentials {
+    email: string
+    password: string 
+}
+
+interface AuthState { 
+    accessToken: string 
+    user: User
+}
+
 interface AuthContextData {
-    toSignUp: (credentials: signUpCredentials) => void 
+    toSignUp: (credentials: signUpCredentials) => void
+    toSignIn: (credentials: signInCredentials) => void
+    accessToken: string 
+    user: User 
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+
+    const [data, setData] = useState<AuthState>(() => {
+        
+        const accessToken = localStorage.getItem("@spot:accessToken")
+        const user = localStorage.getItem("@spot:user")
+
+        if (accessToken && user) {
+            return { accessToken, user: JSON.parse(user) };
+        }
+        return {} as AuthState
+    })
+
+    // const toSignIn = useCallback(async ( { email, password }: signInCredentials) => {
+    //     
+    //     const response = await api.post("/users/signin", { email, password })
+    //     console.log(response)
+    //     const { accessToken, user } = response.data
+    //     localStorage.setItem("@spot:accessToken", accessToken)
+    //     localStorage.setItem("@spot:user", JSON.stringify(user))
+    //     setData({ accessToken, user })
+    // }, [])
+
+        const toSignIn = (data: signInCredentials) => {
+        const { email, password } = data
+        console.log(data)
+        api.post("/users/signin", 
+        {
+            email: email,
+            password: password
+        })
+        .then((response) => {
+            const  accessToken  = response.data.token
+            const user = response.data.token
+            
+            localStorage.setItem("@spot:accessToken", accessToken)
+            localStorage.setItem("@spot:user", JSON.stringify(user))
+// 
+            setData({ accessToken, user })
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    } 
 
     const toSignUp = (data: signUpCredentials) => {
         const { name, email, password, address } = data 
@@ -67,10 +118,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             // Adicionar toast de fracasso
         })
     }
-
     return (
         <AuthContext.Provider
-            value={{ toSignUp }}
+            value={{ 
+                toSignUp,
+                toSignIn,
+                accessToken: data.accessToken,
+                user: data.user
+            }}
         >
             { children }
         </AuthContext.Provider>
