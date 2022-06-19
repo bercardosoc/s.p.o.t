@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "../../components/Form/Input";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { FormButton } from "../../components/Form/Button";
 
 import { RiLockPasswordFill } from "react-icons/ri"
@@ -47,17 +47,28 @@ export const Signup = () => {
 
     return (
         <Flex
-        mt={5}
-        flexDirection="column"
+        h={"100vh"}
+        backgroundColor={"#e9ffdb"}
+        m={"5 auto"}
+        alignItems={["", "", "center", "center"]}
+        flexDirection={["column", "column", "row", "row"]}
         >    
-            <Header/>
+            <Header
+            />
         <Flex
             as="form"
             flexDirection="column"
+            m={["0 auto", "0 auto", "0 5rem", "0 5rem"]}
             onSubmit={handleSubmit(handleSignup)}        
-            m={"auto"}
-            w={["90vw"]}
             >
+            <Text
+                fontSize={"2xl"}
+                fontWeight={"semibold"}
+                textAlign={"center"}
+                margin={"1rem auto"}
+            >
+                Encontre um destino para o seu lixo e ajude os outros.
+            </Text>
             <Input
                 placeholder="Seu nome"
                 error={errors.name}
