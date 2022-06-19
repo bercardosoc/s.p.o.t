@@ -3,7 +3,7 @@ import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
-import { Flex, Image, Text } from "@chakra-ui/react"
+import { Flex, Image, Link, Text } from "@chakra-ui/react"
 import { Header } from "../../components/Header"
 import { Input } from "../../components/Form/Input"
 import { RiLockPasswordFill } from "react-icons/ri"
@@ -75,6 +75,12 @@ export const Signin = () => {
                 <FormButton type="submit">
                     Enviar
                 </FormButton>
+                <Text
+                mt={"0.5rem"}
+                textAlign={"center"}
+            >
+                Ainda não possui conta? Faça seu <Link color={"teal"} href="/">cadastro</Link>
+            </Text>
             </Flex>
         </Flex>
 

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "../../components/Form/Input";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Link, Text } from "@chakra-ui/react";
 import { FormButton } from "../../components/Form/Button";
 
 import { RiLockPasswordFill } from "react-icons/ri"
@@ -106,6 +106,12 @@ export const Signup = () => {
             <FormButton type="submit" >
                 Enviar
             </FormButton>
+            <Text
+                textAlign={"center"}
+                mt={"0.5rem"}
+            >
+                Já possui conta? Faça seu <Link color={"teal"} href="/signin">login</Link>
+            </Text>
         </Flex>
         </Flex>
     )
