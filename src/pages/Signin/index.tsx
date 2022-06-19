@@ -16,8 +16,8 @@ export const Signin = () => {
     const { toSignIn } = useContext(AuthContext)
 
     const schema = yup.object().shape({
-        email: yup.string(),
-        password: yup.string()
+        email: yup.string().required("Campo obrigatório"),
+        password: yup.string().required("Campo obrigatório")
     })
 
     const {
