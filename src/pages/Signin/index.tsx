@@ -3,20 +3,21 @@ import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
-import { Flex } from "@chakra-ui/react"
+import { Flex, Image, Text } from "@chakra-ui/react"
 import { Header } from "../../components/Header"
 import { Input } from "../../components/Form/Input"
 import { RiLockPasswordFill } from "react-icons/ri"
 import { MdAlternateEmail } from "react-icons/md"
 import { FormButton } from "../../components/Form/Button"
+import Map from "../../assets/maps.png"
 
 export const Signin = () => {
 
     const { toSignIn } = useContext(AuthContext)
 
     const schema = yup.object().shape({
-        email: yup.string(),
-        password: yup.string()
+        email: yup.string().required("Campo obrigatório"),
+        password: yup.string().required("Campo obrigatório")
     })
 
     const {
@@ -34,17 +35,31 @@ export const Signin = () => {
 
     return (
         <Flex
-            mt={5}
-            flexDirection="column"    
+        h={"100vh"}
+        backgroundColor={"#e9ffdb"}
+        m={"5 auto"}
+        alignItems={["", "", "center", "center"]}
+        flexDirection={["column", "column", "row", "row"]}    
         >
             <Header/>
             <Flex
                 as="form"
                 flexDirection="column"
+                m={["0 auto", "0 auto", "0 5rem", "0 5rem"]}
                 onSubmit={handleSubmit(handleSignin)}        
-                m={"auto"}
-                w={["90vw"]}
             >
+            <Text
+                fontSize={"2xl"}
+                fontWeight={"semibold"}
+                textAlign={"center"}
+            >
+                Acesse a sua conta e descubra onde você pode contribuir.
+            </Text>
+            <Image
+                margin={"0 auto"}
+                width={["75vw","50vw","50vw","25vw"]}
+                src={Map}
+            />
                 <Input
                     placeholder="Seu email"
                     error={errors.email}

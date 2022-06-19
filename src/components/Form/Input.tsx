@@ -56,6 +56,10 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ nam
         <FormControl isInvalid={!!error}>
             {!!label && <FormLabel color="gray.400">{label}</FormLabel>}
 
+            {!!error && (
+                <FormErrorMessage marginInlineStart={"1.5"} color={"red"}>{error.message}</FormErrorMessage>
+            )}
+
             <InputGroup>
             {Icon && (
                 <InputLeftElement color={inputVariation[variation]}>
@@ -78,9 +82,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ nam
                 {...rest}
             />
             
-            {!!error && (
-                <FormErrorMessage color={"red"}>{error.message}</FormErrorMessage>
-            )}
             </InputGroup>
         </FormControl>
 
