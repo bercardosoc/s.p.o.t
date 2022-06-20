@@ -1,10 +1,11 @@
 import { Box, Flex, HStack, IconButton, SkeletonText, Text } from "@chakra-ui/react"
 import { DirectionsRenderer, GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api"
 import jwtDecode from "jwt-decode"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaLocationArrow } from "react-icons/fa"
 
 import { useAuth } from "../../contexts/AuthContext"
+import { api } from "../../services/api"
 
 // Casa do usuário
 export const Dashboard = () => {
@@ -57,17 +58,35 @@ export const Dashboard = () => {
     const [distance, setDistance] = useState("")
     const [duration, setDuration] = useState("")
     const [travelMode, setTravelMode] = useState("WALKING")
+    const [spots, setSpots] = useState([])
 
     if (!isLoaded) {
         return <SkeletonText/>
     }
 
+    api.get(`dumpSpot/dumpSpotFree`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        },
+    })
+    .then((response) => {
+
+        const data = response.data
+
+        const arr = data.reduce((acc:any, obj:any) => acc.concat(Object.entries(obj)),[])
+        const result = Object.fromEntries(arr)
+        console.log(result)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
     // Pegá-los do back-end a partir do endereço do usuário
-    const spots = [
-        {lat: -22.78661191761933, lng: -43.426467025617825},
-        {lat: -22.7850886197071, lng: -43.42688545022195},
-        {lat: -22.783917126554538, lng: -43.429634153455375}
-    ]
+    // const spots = [
+    //     {lat: -22.78661191761933, lng: -43.426467025617825},
+    //     {lat: -22.7850886197071, lng: -43.42688545022195},
+    //     {lat: -22.783917126554538, lng: -43.429634153455375}
+    // ]
 
     const calculateRoute = async (spot: any) => {
         
