@@ -1,12 +1,39 @@
 import { Box, Flex, HStack, IconButton, SkeletonText, Text } from "@chakra-ui/react"
 import { DirectionsRenderer, GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api"
+import jwtDecode from "jwt-decode"
 import { useState } from "react"
 import { FaLocationArrow } from "react-icons/fa"
 
-// Casa do usuário
+import { useAuth } from "../../contexts/AuthContext"
 
+// Casa do usuário
 export const Dashboard = () => {
-    const center = { lat: -22.787638099915984, lng: -43.426555186544796 } 
+
+    interface User {
+        id: string
+        name: string
+        email: string
+        password?: string
+        address: {
+            city: string 
+            complement?: string 
+            isDumpSpot: boolean 
+            latitude: number 
+            longitude: number 
+            number: number 
+            state: string 
+            street: string 
+            zipCode: string
+        } 
+    }
+
+    const { accessToken } = useAuth()
+
+    const decoded: User = jwtDecode(accessToken)
+    const userLat = decoded.address.latitude 
+    const userLon = decoded.address.longitude 
+    
+    const center = { lat: userLat, lng: userLon } 
     
     interface Spot {
         lat: number
@@ -83,7 +110,7 @@ export const Dashboard = () => {
                         fullscreenControl: false,
                       }}
                     onLoad={onLoadFunction}>
-                    <Marker position={center} />
+                    <Marker position={center} title={"marker"} />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
                     {spots.map((spot, index) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}            
                 </GoogleMap>   

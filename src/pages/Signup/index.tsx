@@ -24,9 +24,11 @@ export const Signup = () => {
         name: yup.string().required("Campo obrigatório"), 
         email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
         password: yup.string().required("Campo obrigatório"),
-        zipCode: yup.string().required("Campo obrigatório"),
-        number: yup.number().required("Campo obrigatório"),
-        complement: yup.string().required("Campo obrigatório"),
+        address: yup.object().shape({
+            zipCode: yup.string(),
+            number: yup.number(),
+            complement: yup.string(),
+        })
     })
     
     const {
