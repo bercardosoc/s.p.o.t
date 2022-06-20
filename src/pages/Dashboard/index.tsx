@@ -49,7 +49,6 @@ export const Dashboard = () => {
     const { isLoaded } = useJsApiLoader({
         // Mudar isso pro env (se for possível, visto o erro com a biblioteca)
         googleMapsApiKey: "AIzaSyAEongSsn0PJdwDmneVLpuhr0zers6itKQ",
-        libraries: ['places'],
     })
 
     const [map, setMap] = useState<any | null>(null)
