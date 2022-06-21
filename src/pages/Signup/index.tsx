@@ -86,6 +86,7 @@ export const Signup = () => {
                 error={errors.password}
                 icon={RiLockPasswordFill}
                 {...register("password")}
+                type="password"
             />
             <Input
                 placeholder="Seu CEP"

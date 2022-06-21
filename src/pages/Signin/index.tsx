@@ -71,6 +71,7 @@ export const Signin = () => {
                     error={errors.password}
                     icon={RiLockPasswordFill}
                     {...register("password")}
+                    type="password"
                 />
                 <FormButton type="submit">
                     Enviar

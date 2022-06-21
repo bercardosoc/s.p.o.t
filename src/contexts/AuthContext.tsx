@@ -1,5 +1,7 @@
 import { api } from "../services/api";
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { useToast } from '@chakra-ui/react'
+
 
 interface AuthProviderProps {
     children: ReactNode
@@ -62,15 +64,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return {} as AuthState
     })
 
-    // const toSignIn = useCallback(async ( { email, password }: signInCredentials) => {
-    //     
-    //     const response = await api.post("/users/signin", { email, password })
-    //     console.log(response)
-    //     const { accessToken, user } = response.data
-    //     localStorage.setItem("@spot:accessToken", accessToken)
-    //     localStorage.setItem("@spot:user", JSON.stringify(user))
-    //     setData({ accessToken, user })
-    // }, [])
+        const toast = useToast()
 
         const toSignIn = (data: signInCredentials) => {
         const { email, password } = data
@@ -86,11 +80,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             
             localStorage.setItem("@spot:accessToken", accessToken)
             localStorage.setItem("@spot:user", JSON.stringify(user))
-// 
+ 
             setData({ accessToken, user })
+
+            toast({
+                title: 'Login efetuado!',
+                description: "É um prazer lhe rever.",
+                status: 'success',
+                position: 'top-right',
+                duration: 4000,
+                isClosable: true,
+              })
         })
         .catch((err) => {
-            console.error(err)
+            toast({
+                title: 'Algo aconteceu!',
+                description: "Verifique seu e-mail ou senha.",
+                status: 'error',
+                position: 'top-right',
+                duration: 4000,
+                isClosable: true,
+              })
         })
     } 
 
@@ -110,12 +120,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             }
         })
         .then((response) => {
-            console.log("Criou o usuário")
-            // Adicionar toast de sucesso
+            toast({
+                title: 'Conta criada!',
+                description: "Agora começa a sua jornada.",
+                status: 'success',
+                position: 'top-right',
+                duration: 4000,
+                isClosable: true,
+              })
         })
         .catch((err) => {
-            console.log(err)
-            // Adicionar toast de fracasso
+            toast({
+                title: 'Algo aconteceu!',
+                description: "Não conseguimos criar a sua conta.",
+                status: 'error',
+                position: 'top-right',
+                duration: 4000,
+                isClosable: true,
+              })
         })
     }
     return (
