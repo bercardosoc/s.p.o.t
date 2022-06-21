@@ -7,7 +7,6 @@ import { FaLocationArrow } from "react-icons/fa"
 import { useAuth } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
 
-// Casa do usuário
 export const Dashboard = () => {
 
     interface User {
@@ -35,17 +34,6 @@ export const Dashboard = () => {
     const userLon = decoded.address.longitude 
     
     const center = { lat: userLat, lng: userLon } 
-    
-    interface Spot {
-        lat: number
-        lng: number 
-    }
-
-    interface DirectionResponseData {
-        origin: Spot 
-        destination: Spot
-        travelMode: string 
-    }
 
     const { isLoaded } = useJsApiLoader({
         // Mudar isso pro env (se for possível, visto o erro com a biblioteca)
@@ -57,7 +45,6 @@ export const Dashboard = () => {
     const [chosenSpot, setChosenSpot] = useState({})
     const [distance, setDistance] = useState("")
     const [duration, setDuration] = useState("")
-    const [travelMode, setTravelMode] = useState("WALKING")
     const [spots, setSpots] = useState<any>([])
 
     useEffect(() => {
@@ -77,19 +64,12 @@ export const Dashboard = () => {
 
     const spotsPositions: Object[] = spots.map((obj: any) => {
         return {
-            "lat": obj.address.latitude,
-            "lng": obj.address.longitude
+            lat: parseFloat(obj.address.latitude),
+            lng: parseFloat(obj.address.longitude)
         }
     })
 
     console.log(spotsPositions)
-
-    /*
-
-    setSpotsPositions(Object.values(spotsPositionsObj))
-    console.log(spotsPositions) */
-    
-    // Pegá-los do back-end a partir do endereço do usuário
 
     const calculateRoute = async (spot: any) => {
         
@@ -137,7 +117,7 @@ export const Dashboard = () => {
                     onLoad={onLoadFunction}>
                     <Marker position={center} title={"marker"} />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
-                    {spots.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}
+                    {spotsPositions.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}
                 </GoogleMap>   
             </Box>
             <Box
