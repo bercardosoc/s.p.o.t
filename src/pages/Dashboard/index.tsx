@@ -78,7 +78,7 @@ export const Dashboard = () => {
         const directionsService = new google.maps.DirectionsService()
             
         const results: any = await directionsService.route({
-            origin: { lat: -22.787638099915984, lng: -43.426555186544796 },
+            origin: center,
             destination: chosenSpot,
             travelMode: google.maps.TravelMode.WALKING,
         })
