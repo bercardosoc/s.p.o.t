@@ -58,35 +58,35 @@ export const Dashboard = () => {
     const [distance, setDistance] = useState("")
     const [duration, setDuration] = useState("")
     const [travelMode, setTravelMode] = useState("WALKING")
-    const [spots, setSpots] = useState([])
+    const [spots, setSpots] = useState<any>([])
+    const [spotsPositions, setSpotsPositions] = useState<any>([])
 
-    if (!isLoaded) {
-        return <SkeletonText/>
-    }
+    useEffect(() => {
+        api.get(`dumpSpot/dumpSpotFree`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+        })
+        .then((response) => {
+            const data = response.data
+            setSpots(Object.values(data))
+        }) 
+        .catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
-    api.get(`dumpSpot/dumpSpotFree`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        },
+    /* const spotsPositionsObj = spots.map((obj: any) => {
+        return {
+            "lat": obj.address.latitude,
+            "lng": obj.address.longitude
+        }
     })
-    .then((response) => {
 
-        const data = response.data
-
-        const arr = data.reduce((acc:any, obj:any) => acc.concat(Object.entries(obj)),[])
-        const result = Object.fromEntries(arr)
-        console.log(result)
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-
+    setSpotsPositions(Object.values(spotsPositionsObj))
+    console.log(spotsPositions) */
+    
     // Pegá-los do back-end a partir do endereço do usuário
-    // const spots = [
-    //     {lat: -22.78661191761933, lng: -43.426467025617825},
-    //     {lat: -22.7850886197071, lng: -43.42688545022195},
-    //     {lat: -22.783917126554538, lng: -43.429634153455375}
-    // ]
 
     const calculateRoute = async (spot: any) => {
         
@@ -106,6 +106,10 @@ export const Dashboard = () => {
     }
     const onLoadFunction = () => {
         setMap(map)
+    }
+
+    if (!isLoaded) {
+        return <SkeletonText/>
     }
 
     return (
@@ -130,7 +134,7 @@ export const Dashboard = () => {
                     onLoad={onLoadFunction}>
                     <Marker position={center} title={"marker"} />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
-                    {spots.map((spot, index) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}            
+                    {/* {spots.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))} */}
                 </GoogleMap>   
             </Box>
             <Box
