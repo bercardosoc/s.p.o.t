@@ -59,7 +59,6 @@ export const Dashboard = () => {
     const [duration, setDuration] = useState("")
     const [travelMode, setTravelMode] = useState("WALKING")
     const [spots, setSpots] = useState<any>([])
-    const [spotsPositions, setSpotsPositions] = useState<any>([])
 
     useEffect(() => {
         api.get(`dumpSpot/dumpSpotFree`, {
@@ -76,12 +75,16 @@ export const Dashboard = () => {
         })
     }, [])
 
-    /* const spotsPositionsObj = spots.map((obj: any) => {
+    const spotsPositions: Object[] = spots.map((obj: any) => {
         return {
             "lat": obj.address.latitude,
             "lng": obj.address.longitude
         }
     })
+
+    console.log(spotsPositions)
+
+    /*
 
     setSpotsPositions(Object.values(spotsPositionsObj))
     console.log(spotsPositions) */
@@ -134,7 +137,7 @@ export const Dashboard = () => {
                     onLoad={onLoadFunction}>
                     <Marker position={center} title={"marker"} />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
-                    {/* {spots.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))} */}
+                    {spots.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}
                 </GoogleMap>   
             </Box>
             <Box
