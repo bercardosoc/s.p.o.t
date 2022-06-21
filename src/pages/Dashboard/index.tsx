@@ -1,12 +1,12 @@
 import { Box, Flex, HStack, IconButton, SkeletonText, Text } from "@chakra-ui/react"
 import { DirectionsRenderer, GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api"
 import jwtDecode from "jwt-decode"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaLocationArrow } from "react-icons/fa"
 
 import { useAuth } from "../../contexts/AuthContext"
+import { api } from "../../services/api"
 
-// Casa do usuário
 export const Dashboard = () => {
 
     interface User {
@@ -34,22 +34,10 @@ export const Dashboard = () => {
     const userLon = decoded.address.longitude 
     
     const center = { lat: userLat, lng: userLon } 
-    
-    interface Spot {
-        lat: number
-        lng: number 
-    }
-
-    interface DirectionResponseData {
-        origin: Spot 
-        destination: Spot
-        travelMode: string 
-    }
 
     const { isLoaded } = useJsApiLoader({
         // Mudar isso pro env (se for possível, visto o erro com a biblioteca)
         googleMapsApiKey: "AIzaSyAEongSsn0PJdwDmneVLpuhr0zers6itKQ",
-        libraries: ['places'],
     })
 
     const [map, setMap] = useState<any | null>(null)
@@ -57,18 +45,31 @@ export const Dashboard = () => {
     const [chosenSpot, setChosenSpot] = useState({})
     const [distance, setDistance] = useState("")
     const [duration, setDuration] = useState("")
-    const [travelMode, setTravelMode] = useState("WALKING")
+    const [spots, setSpots] = useState<any>([])
 
-    if (!isLoaded) {
-        return <SkeletonText/>
-    }
+    useEffect(() => {
+        api.get(`dumpSpot/dumpSpotFree`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+        })
+        .then((response) => {
+            const data = response.data
+            setSpots(Object.values(data))
+        }) 
+        .catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
-    // Pegá-los do back-end a partir do endereço do usuário
-    const spots = [
-        {lat: -22.78661191761933, lng: -43.426467025617825},
-        {lat: -22.7850886197071, lng: -43.42688545022195},
-        {lat: -22.783917126554538, lng: -43.429634153455375}
-    ]
+    const spotsPositions: Object[] = spots.map((obj: any) => {
+        return {
+            lat: parseFloat(obj.address.latitude),
+            lng: parseFloat(obj.address.longitude)
+        }
+    })
+
+    console.log(spotsPositions)
 
     const calculateRoute = async (spot: any) => {
         
@@ -77,7 +78,7 @@ export const Dashboard = () => {
         const directionsService = new google.maps.DirectionsService()
             
         const results: any = await directionsService.route({
-            origin: { lat: -22.787638099915984, lng: -43.426555186544796 },
+            origin: center,
             destination: chosenSpot,
             travelMode: google.maps.TravelMode.WALKING,
         })
@@ -88,6 +89,10 @@ export const Dashboard = () => {
     }
     const onLoadFunction = () => {
         setMap(map)
+    }
+
+    if (!isLoaded) {
+        return <SkeletonText/>
     }
 
     return (
@@ -112,7 +117,7 @@ export const Dashboard = () => {
                     onLoad={onLoadFunction}>
                     <Marker position={center} title={"marker"} />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
-                    {spots.map((spot, index) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}            
+                    {spotsPositions.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}
                 </GoogleMap>   
             </Box>
             <Box
