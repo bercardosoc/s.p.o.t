@@ -68,7 +68,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         const toSignIn = (data: signInCredentials) => {
         const { email, password } = data
-        console.log(data)
         api.post("/users/signin", 
         {
             email: email,
@@ -106,7 +105,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const toSignUp = (data: signUpCredentials) => {
         const { name, email, password, address } = data 
-        console.log(data)
         api
         .post("/users/signup", 
         {

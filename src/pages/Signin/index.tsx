@@ -29,7 +29,6 @@ export const Signin = () => {
     })
 
     const handleSignin = (data: any) => {
-        console.log(data)
         toSignIn(data)
     }
 

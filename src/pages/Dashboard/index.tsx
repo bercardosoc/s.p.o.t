@@ -69,8 +69,6 @@ export const Dashboard = () => {
         }
     })
 
-    console.log(spotsPositions)
-
     const calculateRoute = async (spot: any) => {
         
         setChosenSpot(spot)
@@ -139,7 +137,7 @@ export const Dashboard = () => {
             >
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                 <Text>Distância: {distance} </Text>
-                <Text>Tempo de viagem: {duration} </Text>
+                <Text>Tempo de viagem a pé: {duration} </Text>
                 <IconButton
                     aria-label='center back'
                     icon={<FaLocationArrow />}

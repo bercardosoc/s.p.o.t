@@ -257,9 +257,9 @@ import {
       label: 'Quem somos nós',
       children: [
         {
-          label: 'Os desenvolvedores da aplicação',
-          subLabel: 'Uma equipe de desenvolvedores full-stack',
-          href: '/team',
+          label: 'O back-end da aplicação',
+          subLabel: 'O que acontece por detrás das cortinas do front-end',
+          href: 'https://github.com/lcsreiser/pollutants-recycling'
         },
       ],
     },
