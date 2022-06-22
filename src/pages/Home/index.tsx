@@ -22,6 +22,7 @@ import Battery from "../../assets/deadbattery.png"
 import Medicine from "../../assets/medicine.png"
 
 import Undraw from "../../assets/undraw.svg"
+import WithSubnavigation from '../../components/NavBar';
 
   interface FeatureProps {
     title: string;
@@ -35,12 +36,14 @@ import Undraw from "../../assets/undraw.svg"
       maxW={'7xl'}
       bgColor={"#e9ffdb"}
       >
+        {/* Nav Bar */}
+        <WithSubnavigation/>
         <Stack
           align={'center'}
           spacing={{ base: 8, md: 10 }}
           py={{ base: 10, md: 28 }}
           direction={{ base: 'column', md: 'row' }}>
-          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+          <Stack flex={1} spacing={{ base: 5, md: 1 }}>
             <Heading
               lineHeight={1.1}
               fontWeight={600}
