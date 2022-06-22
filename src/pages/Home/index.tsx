@@ -13,17 +13,15 @@ import {
     IconProps,
     useColorModeValue,
     SimpleGrid,
+    Link
   } from '@chakra-ui/react';
-import { ReactElement } from 'react';
-
-import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc';
+import { ReactElement, ReactNode } from 'react';
 
 import Oil from "../../assets/oleo.png"
 import Battery from "../../assets/deadbattery.png"
 import Medicine from "../../assets/medicine.png"
 
 import Undraw from "../../assets/undraw.svg"
-import { Link } from 'react-router-dom';
 
   interface FeatureProps {
     title: string;
@@ -73,7 +71,7 @@ import { Link } from 'react-router-dom';
             <Stack
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: 'column', sm: 'row' }}>
-              <Link to="/signup">
+              <Link href="/signup">
                 <Button
                     rounded={'full'}
                     size={'lg'}
@@ -168,10 +166,12 @@ import { Link } from 'react-router-dom';
         />
       </SimpleGrid>
     </Box>
-        
+
+    {/* Footer */}
     </Container>
     );
   }
+
   
   const PlayIcon = createIcon({
     displayName: 'PlayIcon',

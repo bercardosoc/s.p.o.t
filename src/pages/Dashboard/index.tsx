@@ -115,7 +115,15 @@ export const Dashboard = () => {
                         fullscreenControl: false,
                       }}
                     onLoad={onLoadFunction}>
-                    <Marker position={center} title={"marker"} />
+                    <Marker 
+                    icon={{
+                        url: "https://img.icons8.com/flat-round/64/000000/home--v1.png",
+                        anchor: new google.maps.Point(17, 46),
+                        scaledSize: new google.maps.Size(37, 37)
+                    }}
+                    position={center} 
+                    title={"marker"} 
+                    />
                     {directionsResponse && (<DirectionsRenderer directions={directionsResponse}/>)}
                     {spotsPositions.map((spot: any, index: number) => (<Marker key={index} position={spot} onClick={() => calculateRoute(spot)} />))}
                 </GoogleMap>   
@@ -130,8 +138,8 @@ export const Dashboard = () => {
                 zIndex='1'
             >
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
-                <Text>Distance: {distance} </Text>
-                <Text>Duration: {duration} </Text>
+                <Text>Distância: {distance} </Text>
+                <Text>Tempo de viagem: {duration} </Text>
                 <IconButton
                     aria-label='center back'
                     icon={<FaLocationArrow />}
