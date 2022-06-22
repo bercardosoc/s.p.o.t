@@ -48,7 +48,7 @@ export const Dashboard = () => {
     const [spots, setSpots] = useState<any>([])
 
     useEffect(() => {
-        api.get(`dumpSpot/dumpSpotFree`, {
+        api.get(`dumpSpot/free`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
