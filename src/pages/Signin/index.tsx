@@ -29,7 +29,6 @@ export const Signin = () => {
     })
 
     const handleSignin = (data: any) => {
-        console.log(data)
         toSignIn(data)
     }
 
@@ -80,7 +79,7 @@ export const Signin = () => {
                 mt={"0.5rem"}
                 textAlign={"center"}
             >
-                Ainda não possui conta? Faça seu <Link color={"teal"} href="/">cadastro</Link>
+                Ainda não possui conta? Faça seu <Link color={"teal"} href="/signup">cadastro</Link>
             </Text>
             </Flex>
         </Flex>

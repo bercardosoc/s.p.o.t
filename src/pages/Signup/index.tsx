@@ -41,7 +41,6 @@ export const Signup = () => {
 
     // tipar melhor essa any 
     const handleSignup = (data: any) => {
-        console.log(data)
         toSignUp(data)
     }
 
