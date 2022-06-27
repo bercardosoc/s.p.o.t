@@ -2,7 +2,7 @@
 
 Este é o front-end da aplicação que encontra os pontos de descarte mais próximos de você. O back-end citado por se encontrar [aqui](https://github.com/lcsreiser/pollutants-recycling)
 
-<img src="./src/readme/desktop1.png" alt="landing-page" width="600"/>
+<img src="./src/readme/desktop1.png" alt="landing-page" width="600" margin="0 auto"/>
 <img src="./src/readme/mobile1.png" alt="landing-page" width="300"/>
 <img src="./src/readme/mobile2.png" alt="landing-page" width="300"/>
 
