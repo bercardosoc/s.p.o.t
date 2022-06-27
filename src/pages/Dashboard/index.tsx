@@ -7,6 +7,10 @@ import { FaLocationArrow } from "react-icons/fa"
 import { useAuth } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
 
+import dotenv from "dotenv";
+
+dotenv.config()
+
 export const Dashboard = () => {
 
     interface User {
@@ -37,7 +41,7 @@ export const Dashboard = () => {
 
     const { isLoaded } = useJsApiLoader({
         // Mudar isso pro env (se for possível, visto o erro com a biblioteca)
-        googleMapsApiKey: "AIzaSyAEongSsn0PJdwDmneVLpuhr0zers6itKQ",
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     })
 
     const [map, setMap] = useState<any | null>(null)
